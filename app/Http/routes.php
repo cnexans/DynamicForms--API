@@ -24,7 +24,8 @@ App::singleton('oauth2', function() {
 	
 	$server->addGrantType(new OAuth2\GrantType\ClientCredentials($storage));
 	$server->addGrantType(new OAuth2\GrantType\UserCredentials($storage));
-	
+	$server->addGrantType(new OAuth2\GrantType\RefreshToken($storage));
+
 	return $server;
 });
 
@@ -39,6 +40,7 @@ Route::get('/', function () {
 
 
 Route::post('oauth/token', 'OAuthController@getAccessToken');
+
 Route::get('oauth/token', function(){
 	return response()->json([
 		'error' => 'Missing OAuth params',
@@ -51,10 +53,10 @@ Route::get('oauth/token', function(){
 				'client_secret'
 			]
 		]
-	], 401);
+	], 400);
 });
 
-
+/*
 Route::get('private', function()
 {
 	$bridgedRequest  = OAuth2\HttpFoundationBridge\Request::createFromRequest(Request::instance());
@@ -76,4 +78,4 @@ Route::get('private', function()
 			'error' => 'Unauthorized'
 		), $bridgedResponse->getStatusCode());
 	}
-});
+});*/

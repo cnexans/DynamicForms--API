@@ -21,10 +21,17 @@ class OauthController extends Controller
 {
     public function getAccessToken(Request $request)
     {
+
+    	
         $bridgedRequest  = OAuth2_Request::createFromRequest($request->instance());
+
         $bridgedResponse = new OAuth2_Response();
         
-        $bridgedResponse = App::make('oauth2')->handleTokenRequest($bridgedRequest, $bridgedResponse);
+        $bridgedResponse = 
+        App::make('oauth2')->handleTokenRequest (
+        	$bridgedRequest, 
+        	$bridgedResponse
+        );
         
         return $bridgedResponse;
     }
