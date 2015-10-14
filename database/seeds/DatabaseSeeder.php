@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         // $this->call(UserTableSeeder::class);
         $this->call( 'OAuthClientsSeeder' );
-        $this->call( 'OAuthUsersSeeder' );
+        $this->call( 'UserTableSeeder' );
 
         Model::reguard();
     }

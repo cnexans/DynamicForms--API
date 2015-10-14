@@ -13,7 +13,7 @@
 
 App::singleton('oauth2', function() {
 	
-	$storage = new OAuth2\Storage\Pdo
+	$storage = new App\Http\Controllers\OAuthPdo
 	([
 		'dsn' => 'mysql:dbname='.env('DB_DATABASE').';host=' . env('DB_HOST'),
 		'username' => env('DB_USERNAME'),
@@ -38,14 +38,20 @@ Route::get('/', function () {
 
 
 
-Route::post('oauth/token', function()
-{
-	$bridgedRequest  = OAuth2\HttpFoundationBridge\Request::createFromRequest(Request::instance());
-	$bridgedResponse = new OAuth2\HttpFoundationBridge\Response();
-	
-	$bridgedResponse = App::make('oauth2')->handleTokenRequest($bridgedRequest, $bridgedResponse);
-	
-	return $bridgedResponse;
+Route::post('oauth/token', 'OAuthController@getAccessToken');
+Route::get('oauth/token', function(){
+	return response()->json([
+		'error' => 'Missing OAuth params',
+		'expected' => [
+			'post' => [
+				'grant_type',
+				'username',
+				'password',
+				'client_id',
+				'client_secret'
+			]
+		]
+	], 401);
 });
 
 
