@@ -30,11 +30,7 @@ App::singleton('oauth2', function() {
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
+Route::post('/', 'PostController@index');
 
 
 
