@@ -4,7 +4,7 @@ This repository initializes a laravel 5 project with BShaffer Oauth package for 
 
 Grant types: password, client and refresh
 
-Password grant type
+## Password grant type
 
 servername/oauth/token
 ```javascript
@@ -29,7 +29,7 @@ Response
 ```
 
 
-Refresh grant type
+## Refresh grant type
 
 servername/oauth/token
 ```javascript
@@ -50,7 +50,7 @@ Response
 }
 ```
 
-Example controller method using Oauth middleware (PostController@index)
+## Example controller method using Oauth middleware (PostController@index)
 
 servername/
 
@@ -69,7 +69,7 @@ Response
 
 Where 1 is the user_id is related to the access token. 
 
-If no access token given
+### If no access token given
 
 ```javascript
 {
@@ -77,7 +77,7 @@ If no access token given
 }
 ```
 
-If invalid access token
+### If invalid access token
 ```javascript
 {
   "error": "Invalid access token"
@@ -85,4 +85,4 @@ If invalid access token
 ```
 
 
-THis is done adding $this->middleware('oauth'); to the controller, the middleware returns the user_id related to the access token if everything went fine.
+This is done adding $this->middleware('oauth'); to the controller, the middleware returns the user_id related to the access token if everything went fine.
