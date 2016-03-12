@@ -1,0 +1,13 @@
+drop table if exists migrations;
+drop table if exists password_resets;
+drop table if exists oauth_access_tokens;
+drop table if exists oauth_authorization_codes ;
+drop table if exists oauth_clients;
+drop table if exists oauth_jwt;
+drop table if exists oauth_refresh_tokens;
+drop table if exists oauth_scopes;
+drop table if exists int_values;
+drop table if exists form_answers;
+drop table if exists field_descriptors;
+drop table if exists forms;
+drop table if exists users;

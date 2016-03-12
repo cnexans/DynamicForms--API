@@ -15,6 +15,8 @@ class CreateIntValuesTable extends Migration
         Schema::create('int_values', function (Blueprint $table) {
             // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
             $table->increments('id'); 
+            $table->integer('value'); 
+            $table->integer('form_answer_id')->unsigned();
             $table->foreign('form_answer_id')->references('id')->on('field_descriptors');
             // $table->unique('form_answer_id'); 
             

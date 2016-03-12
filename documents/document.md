@@ -23,15 +23,15 @@
 - password reset
 
 ## Permisos
-1 . empleado
-2 . empleado
-3 . empleado,gerente(sus formulario), presidente(universo)
-4 . gerente(sus formulario), presidente(universo)
-5 . gerente(sus formulario), presidente(universo)
-6 . gerente, presidente
-7 . todos
-8 . gerente,presidente
-9 . gerente(empleados),presidente(empleados, gerentes)
+1. empleado
+2. empleado
+3. empleado,gerente(sus formulario), presidente(universo)
+4. gerente(sus formulario), presidente(universo)
+5. gerente(sus formulario), presidente(universo)
+6. gerente, presidente
+7. todos
+8. gerente,presidente
+9. gerente(empleados),presidente(empleados, gerentes)
 10. gerente,presidente
 11. gerente,presidente
 12. empleado
@@ -42,7 +42,7 @@ Notas: TODOS LOS DELETE deben ser soft
 
 
 # Inicio de swagger
-Markup :  `code()`
+```javascript
 {
     "swagger": "2.0",
     "schemes": [
@@ -79,5 +79,4 @@ Markup :  `code()`
         }
     }
 }
-Markup : ```javascript
-         ```
+```

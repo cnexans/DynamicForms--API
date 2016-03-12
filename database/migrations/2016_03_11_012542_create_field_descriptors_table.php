@@ -16,6 +16,7 @@ class CreateFieldDescriptorsTable extends Migration
             $table->increments('id');
             //Formulario al cual pertece
             $table->integer('form_id')->unsigned(); 
+            $table->foreign('form_id')->references('id')->on('forms');
             $table->integer('number');   // N'umero de campo
             $table->integer('position'); // Posici'on
             $table->text('label');       // Etiqueta de muestra para el campo
@@ -30,10 +31,6 @@ class CreateFieldDescriptorsTable extends Migration
                  'LOCATION', // Tabla compuesta con dos float
                  ]);
             $table->softDeletes();
-        });
-
-        Schema::table('field_descriptors', function ($table) {
-            $table->foreign('form_id')->references('id')->on('forms');
         });
     }
 
