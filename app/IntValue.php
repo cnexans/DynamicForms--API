@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FormDescriptor extends Model
+class IntValue extends Model
 {
-    //
+    protected $table = 'int_values';
 }
