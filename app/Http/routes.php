@@ -32,9 +32,6 @@ App::singleton('oauth2', function() {
 
 Route::post('/', 'PostController@index');
 
-
-
-
 Route::post('oauth/token', 'OAuthController@getAccessToken');
 
 Route::get('oauth/token', function(){
