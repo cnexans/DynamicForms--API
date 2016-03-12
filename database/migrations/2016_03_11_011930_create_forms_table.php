@@ -14,9 +14,13 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::table('forms', function ($table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

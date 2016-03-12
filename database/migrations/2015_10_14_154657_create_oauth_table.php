@@ -25,10 +25,10 @@ class CreateOauthTable extends Migration
         
         CREATE TABLE oauth_access_tokens (
             access_token VARCHAR(40) NOT NULL, 
-            client_id VARCHAR(80) NOT NULL, 
-            user_id VARCHAR(255), 
-            expires TIMESTAMP NOT NULL, 
-            scope VARCHAR(2000), 
+            client_id    VARCHAR(80) NOT NULL, 
+            user_id      VARCHAR(255), 
+            expires      TIMESTAMP NOT NULL, 
+            scope        VARCHAR(2000), 
             CONSTRAINT access_token_pk PRIMARY KEY (access_token));
         
         CREATE TABLE oauth_authorization_codes (
@@ -57,9 +57,11 @@ class CreateOauthTable extends Migration
         CONSTRAINT client_id_pk_jwt PRIMARY KEY (client_id));
 SQL;
         
-        foreach (explode("\n", $schema) as $statement)
-        {
-            DB::statement($statement);
+        foreach (explode(";", $schema) as $statement)
+        {   
+            if ($statement){
+                DB::statement($statement);
+            }
         }
     }
 

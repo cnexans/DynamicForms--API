@@ -16,7 +16,7 @@ class CreateIntValuesTable extends Migration
             // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
             $table->increments('id'); 
             $table->foreign('form_answer_id')->references('id')->on('field_descriptors');
-            $table->unique('form_answer_id'); 
+            // $table->unique('form_answer_id'); 
             
         });
     }
