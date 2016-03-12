@@ -13,7 +13,7 @@
         "/form/new": {
             "parameters": [],
             "post": {
-                "summary": "Create new orm",
+                "summary": "Create new form",
                 "description": "",
                 "operationId": "new_form_instance",
                 "consumes": [
@@ -37,6 +37,105 @@
                         "examples": {
                             "application/json": {
                                 "id": 3
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ]
+            }
+        },
+        "/form/add_fields": {
+            "parameters": [],
+            "post": {
+                "summary": "Add fields to form",
+                "description": "",
+                "operationId": "add_field_to_form",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "fields": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "number": {
+                                                "type": "integer"
+                                            },
+                                            "position": {
+                                                "type": "integer"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "question": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "fields": [
+                                    {
+                                        "number": 1,
+                                        "position": 1,
+                                        "label": "prod_id",
+                                        "question": "Whats the product code?",
+                                        "type": "String"
+                                    },
+                                    {
+                                        "number": 2,
+                                        "position": 2,
+                                        "label": "price",
+                                        "question": "What's the product price?",
+                                        "type": "FLOAT"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "header",
+                        "description": "",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {}
+                        }
+                    },
+                    "412": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {}
+                        },
+                        "examples": {
+                            "application/json": {
+                                "error": "unexpected file structure"
                             }
                         }
                     }

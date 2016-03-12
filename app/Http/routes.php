@@ -51,11 +51,9 @@ Route::get('oauth/token', function(){
 });
 
 // Skel para rutas con prefijo
-// Route::group(['prefix' => 'api'], function () {
-//     Route::group(['prefix' => 'user'], function () {
-//         Route::get('register', array('uses' => 'Controller@show_user'));
-//         Route::get('show',     array('uses' => 'Controller@show_user'));
-//     });
+// Route::group(['prefix' => 'form'], function () {
+//     Route::post('new', array('uses' => 'FormController@new'));
+//     Route::post('show',array('uses' => 'FormController@add_fields'));
 // });
 
 /*
