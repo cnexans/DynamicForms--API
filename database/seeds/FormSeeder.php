@@ -32,13 +32,14 @@ class FormSeeder extends Seeder
 		            'label'    => $faker->words($nb = 3, $asText = true),
 		            'question' => $faker->words($nb = 3, $asText = true),
 		            'type'     => $faker->randomElements([
-		            	'TEXT',
-                		'INT',
-                		'FLOAT',
-                		'TIMESTAMP',
-                		'RATING',   // TINYINT
-                		'PICTURE',  // No encontre tipo adecuado para archivos en la documentacion de laravel
-                		'LOCATION', // Tabla compuesta con dos float
+                        'TEXT',
+                        'INT',
+                        'FLOAT',
+                        'TIMESTAMP',
+                        'RATING',   // TINYINT
+                        'LOCATION', // Tabla compuesta con dos float
+                        'BLOB',     // Archivo
+                        'OPTION',   // En otra tabla se encuentra las opciones posibles
                 		], $count = 1)[0],
 		        ]);
 			endfor;
