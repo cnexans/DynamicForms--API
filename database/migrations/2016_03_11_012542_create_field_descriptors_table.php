@@ -29,6 +29,8 @@ class CreateFieldDescriptorsTable extends Migration
                  'RATING',   // TINYINT
                  'PICTURE',  // No encontre tipo adecuado para archivos en la documentacion de laravel
                  'LOCATION', // Tabla compuesta con dos float
+                 'BLOB',     // Archivo
+                 'OPTION',   // En otra tabla se encuentra las opciones posibles
                  ]);
             $table->softDeletes();
         });
