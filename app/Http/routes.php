@@ -32,6 +32,7 @@ App::singleton('oauth2', function() {
 
 Route::post('/', 'PostController@index');
 
+
 Route::post('oauth/token', 'OAuthController@getAccessToken');
 
 Route::get('oauth/token', function(){
@@ -48,6 +49,14 @@ Route::get('oauth/token', function(){
 		]
 	], 400);
 });
+
+// Skel para rutas con prefijo
+// Route::group(['prefix' => 'api'], function () {
+//     Route::group(['prefix' => 'user'], function () {
+//         Route::get('register', array('uses' => 'Controller@show_user'));
+//         Route::get('show',     array('uses' => 'Controller@show_user'));
+//     });
+// });
 
 /*
 Route::get('private', function()
