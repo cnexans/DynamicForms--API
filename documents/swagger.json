@@ -1,0 +1,83 @@
+{
+    "swagger": "2.0",
+    "schemes": [
+        "http"
+    ],
+    "host": "localhost:8000",
+    "info": {
+        "version": "",
+        "title": "Laravel api server",
+        "description": "## Welcome\n\nThis is a place to put general notes and extra information, for internal use.\n\nTo get started designing/documenting this API, select a version on the left."
+    },
+    "paths": {
+        "/form/new": {
+            "parameters": [],
+            "post": {
+                "summary": "Create new orm",
+                "description": "",
+                "operationId": "new_form_instance",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "examples": {
+                            "application/json": {
+                                "id": 3
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "form": {
+            "type": "object",
+            "description": "Form identity",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string",
+                    "description": "When it was created",
+                    "format": "date-time"
+                },
+                "created_by": {
+                    "type": "object"
+                }
+            },
+            "required": [
+                "created_at",
+                "created_by"
+            ]
+        }
+    },
+    "securityDefinitions": {
+        "oauth2": {
+            "type": "oauth2",
+            "flow": "implicit",
+            "scopes": {},
+            "authorizationUrl": ""
+        }
+    }
+}
