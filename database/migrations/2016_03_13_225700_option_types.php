@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionTypeTable extends Migration
+class OptionTypes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateOptionTypeTable extends Migration
     public function up()
     {
         Schema::create('option_types', function (Blueprint $table) {
-            $table->increments('id');
+            // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
+            $table->increments('id'); 
+            $table->string('display_option');
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
-            $table->string('value');
+            // $table->unique('form_answer_id');
             $table->timestamps();
         });
     }

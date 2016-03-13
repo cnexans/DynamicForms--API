@@ -17,20 +17,19 @@ class CreateFieldDescriptorsTable extends Migration
             //Formulario al cual pertece
             $table->integer('form_id')->unsigned(); 
             $table->foreign('form_id')->references('id')->on('forms');
-            $table->integer('number');   // N'umero de campo
             $table->integer('position'); // Posici'on
             $table->text('label');       // Etiqueta de muestra para el campo
             $table->text('question');    // Pregunta para el campo
             $table->enum('type',         // Tipo de campo/tabla a utilizar
                 ['TEXT',
-                 'INT',
-                 'FLOAT',
-                 'TIMESTAMP',
-                 'RATING',   // TINYINT
-                 'LOCATION', // Tabla compuesta con dos float
-                 'BLOB',     // Archivo
-                 'OPTION',   // En otra tabla se encuentra las opciones posibles
-                 ]);
+                'INT',
+                'FLOAT',
+                'TIMESTAMP',
+                'RATING',   // TINYINT
+                'LOCATION', // Tabla compuesta con dos float
+                'BLOB',     // Archivo
+                'OPTION',   // En otra tabla se encuentra las opciones posibles
+                ]);
             $table->softDeletes();
         });
     }
@@ -42,6 +41,17 @@ class CreateFieldDescriptorsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('option_types');
+
+        Schema::dropIfExists('location_values');
+        Schema::dropIfExists('float_values');
+        Schema::dropIfExists('integer_values');
+        Schema::dropIfExists('blob_values');
+        Schema::dropIfExists('text_values');
+        Schema::dropIfExists('string_values');
+        Schema::dropIfExists('date_values');
+
+
         Schema::drop('field_descriptors');
     }
 }
