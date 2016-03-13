@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIntValuesTable extends Migration
+class CreateStringValuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,15 @@ class CreateIntValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('int_values', function (Blueprint $table) {
+        Schema::create('string_values', function (Blueprint $table) {
             // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
             $table->increments('id'); 
-            $table->integer('value'); 
+            $table->float('value'); 
+            $table->integer('field_descriptor_id')->unsigned();
+            $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
+
             $table->integer('form_answer_id')->unsigned();
-            $table->foreign('form_answer_id')->references('id')->on('field_descriptors');
-            // $table->unique('form_answer_id'); 
+            $table->foreign('form_answer_id')->references('id')->on('form_answers');
             
         });
     }
@@ -30,6 +32,6 @@ class CreateIntValuesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('int_values');
+        Schema::drop('string_values');
     }
 }
