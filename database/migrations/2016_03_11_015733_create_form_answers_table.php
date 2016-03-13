@@ -14,14 +14,11 @@ class CreateFormAnswersTable extends Migration
     {
         Schema::create('form_answers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('data_row')->unsigned(); // Ref a tabla desconocida
-            $table->integer('answer_number')->unsigned(); // Ref a tabla desconocida
-            // Campo del descriptor de campos al cual responde
+            $table->integer('form_instance_id')->unsigned();
+            $table->integer('data_row')->unsigned();
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
-            // Usuario que respondio el
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('form_instance_id')->references('id')->on('form_instances');
             $table->timestamps();
         });
 
@@ -35,6 +32,15 @@ class CreateFormAnswersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('location_values');
+        Schema::dropIfExists('float_values');
+        Schema::dropIfExists('integer_values');
+        Schema::dropIfExists('blob_values');
+        Schema::dropIfExists('text_values');
+        Schema::dropIfExists('string_values');
+        Schema::dropIfExists('date_values');
+
+
         Schema::drop('form_answers');
     }
 }

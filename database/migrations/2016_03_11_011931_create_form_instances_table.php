@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFormsTable extends Migration
+class CreateFormInstancesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,13 @@ class CreateFormsTable extends Migration
      */
     public function up()
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('form_instances', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('form_id')->unsigned();
+            $table->foreign('form_id')->references('id')->on('forms');
             $table->integer('user_id')->unsigned();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::table('forms', function ($table) {
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
@@ -31,9 +29,8 @@ class CreateFormsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_instances');
-        Schema::dropIfExists('field_descriptors');
+        Schema::dropIfExists('form_answers');
 
-        Schema::drop('forms');
+        Schema::drop('form_instances');
     }
 }
