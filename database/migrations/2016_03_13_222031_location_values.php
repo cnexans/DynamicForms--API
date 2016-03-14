@@ -13,15 +13,20 @@ class LocationValues extends Migration
     public function up()
     {
         Schema::create('location_values', function (Blueprint $table) {
-            // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
+            //Identificador
             $table->increments('id'); 
+
+            //Valores de longitud y latitud
             $table->float('lat_value'); 
             $table->float('lng_value'); 
 
+
+            //Referencia al campo al cual pertenece
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
-            // $table->unique('form_answer_id');
+            
 
+            //Referencia a la instancia de campo al cual le da respuesta
             $table->integer('form_answer_id')->unsigned();
             $table->foreign('form_answer_id')->references('id')->on('form_answers');
 

@@ -12,24 +12,38 @@ class CreateFieldDescriptorsTable extends Migration
      */
     public function up()
     {
+        //Campos que pertenecen a un tipo de formulario
         Schema::create('field_descriptors', function (Blueprint $table) {
             $table->increments('id');
             //Formulario al cual pertece
             $table->integer('form_id')->unsigned(); 
             $table->foreign('form_id')->references('id')->on('forms');
-            $table->integer('position'); // Posici'on
-            $table->text('label');       // Etiqueta de muestra para el campo
-            $table->text('question');    // Pregunta para el campo
-            $table->enum('type',         // Tipo de campo/tabla a utilizar
-                ['TEXT',
-                'INT',
-                'FLOAT',
-                'TIMESTAMP',
-                'RATING',   // TINYINT
-                'LOCATION', // Tabla compuesta con dos float
-                'BLOB',     // Archivo
-                'OPTION',   // En otra tabla se encuentra las opciones posibles
+
+            //Posicion dentro del render
+            $table->integer('position');
+
+            // Etiqueta de muestra para el campo
+            $table->text('label');
+
+            // Pregunta para el campo
+            $table->text('question');
+
+            // Tipo de campo/tabla a utilizar
+            $table->enum('type',
+                ['TEXT',           // area de texto          --> text_values
+                'STRING',          // campo de texto         --> string_values
+                'NUMBER',          // campo de numero        --> float_values
+                'DATE',            // campo de fecha         --> date_values
+                'RATING',          // campo de rating        --> integer_values
+                'LOCATION',        // campo de GPS           --> location_values
+                'PHOTO',           // capturar foto          --> blob_values
+                'CANVAS_PHOTO',    // capturar y editar foto --> blob_values
+                'OPTION',          // seleccionar opcion     --> integer_values
+                                   // opciones posibles      --> option_types
+                'QR_CODE'          // leer codigo QR         --> text_values
                 ]);
+
+
             $table->softDeletes();
         });
     }
