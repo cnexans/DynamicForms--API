@@ -14,10 +14,17 @@ class CreateFormInstancesTable extends Migration
     {
         Schema::create('form_instances', function (Blueprint $table) {
             $table->increments('id');
+
+            //Respuesta del formulario hecha por un usuario
+
+            //Referencia al formulario
             $table->integer('form_id')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms');
+
+            //Usuario que respondio esta instancia
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            
             $table->timestamps();
         });
     }
