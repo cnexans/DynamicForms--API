@@ -27,20 +27,22 @@ class FormSeeder extends Seeder
 				DB::table('field_descriptors')->insert([
 					'id'       => $acum + $j,
 					'form_id'  => $i,
-		            'number'   => $j,
 		            'position' => $j,
 		            'label'    => $faker->words($nb = 3, $asText = true),
 		            'question' => $faker->words($nb = 3, $asText = true),
-		            'type'     => $faker->randomElements([
-                        'TEXT',
-                        'INT',
-                        'FLOAT',
-                        'TIMESTAMP',
-                        'RATING',   // TINYINT
-                        'LOCATION', // Tabla compuesta con dos float
-                        'BLOB',     // Archivo
-                        'OPTION',   // En otra tabla se encuentra las opciones posibles
-                		], $count = 1)[0],
+		            'type'     => $faker->randomElements(
+                        ['TEXT',           // area de texto          --> text_values
+                        'STRING',          // campo de texto         --> string_values
+                        'NUMBER',          // campo de numero        --> float_values
+                        'DATE',            // campo de fecha         --> date_values
+                        'RATING',          // campo de rating        --> integer_values
+                        'LOCATION',        // campo de GPS           --> location_values
+                        'PHOTO',           // capturar foto          --> blob_values
+                        'CANVAS_PHOTO',    // capturar y editar foto --> blob_values
+                        'OPTION',          // seleccionar opcion     --> integer_values
+                                           // opciones posibles      --> option_types
+                        'QR_CODE'          // leer codigo QR         --> text_values
+                        ], $count = 1)[0],
 		        ]);
 			endfor;
 

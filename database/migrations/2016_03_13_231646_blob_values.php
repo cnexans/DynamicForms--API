@@ -13,12 +13,21 @@ class BlobValues extends Migration
     public function up()
     {
         Schema::create('blob_values', function (Blueprint $table) {
-            // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
+            //Identificador
             $table->increments('id'); 
-            $table->binary('value'); 
+
+            //Valor binario
+            $table->binary('value');
+
+            //Mime-type del archivo
+            $table->binary('mine_type');
+
+            //Referencia al campo
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
 
+
+            //Referencia a la isntancia del campo
             $table->integer('form_answer_id')->unsigned();
             $table->foreign('form_answer_id')->references('id')->on('form_answers');
             

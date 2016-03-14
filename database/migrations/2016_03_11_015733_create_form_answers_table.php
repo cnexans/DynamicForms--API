@@ -12,13 +12,23 @@ class CreateFormAnswersTable extends Migration
      */
     public function up()
     {
+        //Respuesta a un cierto campo de una cierta instancia de formulario
         Schema::create('form_answers', function (Blueprint $table) {
             $table->increments('id');
+
+            //Instancia de formulario a la cual pertenece
             $table->integer('form_instance_id')->unsigned();
+
+            //Id del valor donde buscar la respuesta al campo
             $table->integer('data_row')->unsigned();
+
+            //Ccampo al cual pertenece
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
+
+            //Referencia a la instancia de formulario
             $table->foreign('form_instance_id')->references('id')->on('form_instances');
+            
             $table->timestamps();
         });
 

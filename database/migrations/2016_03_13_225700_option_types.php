@@ -13,12 +13,16 @@ class OptionTypes extends Migration
     public function up()
     {
         Schema::create('option_types', function (Blueprint $table) {
-            // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
+            //Identificador
             $table->increments('id'); 
+
+            //La opcion que se mostrara
             $table->string('display_option');
+
+            //Esta opcion pertenece a un cierto campo con type = option
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
-            // $table->unique('form_answer_id');
+
             $table->timestamps();
         });
     }

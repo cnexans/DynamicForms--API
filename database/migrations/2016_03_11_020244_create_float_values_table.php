@@ -13,12 +13,19 @@ class CreateFloatValuesTable extends Migration
     public function up()
     {
         Schema::create('float_values', function (Blueprint $table) {
-            // Increiblemente ineficiente, un entero por cada respuesta. Lo dejo? el form_answer es unico. Quitar id afectaria el orm?
+            //Identificador
             $table->increments('id'); 
+
+            //Valor
             $table->float('value'); 
+
+
+            //Referencia al campo al cual pertenece
             $table->integer('field_descriptor_id')->unsigned();
             $table->foreign('field_descriptor_id')->references('id')->on('field_descriptors');
 
+
+            //Referencia a la instancia del campo al cual pertenece
             $table->integer('form_answer_id')->unsigned();
             $table->foreign('form_answer_id')->references('id')->on('form_answers');
             

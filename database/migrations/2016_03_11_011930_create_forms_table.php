@@ -14,6 +14,8 @@ class CreateFormsTable extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->increments('id');
+
+            //El president o manager que creo el formulario
             $table->integer('user_id')->unsigned();
             $table->timestamps();
             $table->softDeletes();
