@@ -5,16 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 
 class FormController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Insertar una nueva tabla de formulario vacía
      *
      * @return \Illuminate\Http\Response
      */
-    public function new(){
-
+    public function make_new(){
+        // Revisar que usuario y agregarlo en el insert
+        $id = DB::table('forms')->insertGetId(
+            ['user_id' => 1]
+        );
+        return response()->json(['id' => $id]);
     }
 
     /**
@@ -22,9 +27,23 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_fields(){
+    public function add_fields(Request $r){
+        print $r["id"];
+        foreach ($r["fields"] as $value) {
+            print $value;
+        }
+        return response()-> json(['id' => "holi"]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function structure(){
 
     }
+
 
     // /**
     //  * Store a newly created resource in storage.
