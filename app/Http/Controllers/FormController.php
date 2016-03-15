@@ -6,20 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
+use App\User;
 
 class FormController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('oauth');
+    }
     /**
      * Insertar una nueva tabla de formulario vacía
      *
      * @return \Illuminate\Http\Response
      */
-    public function make_new(){
+    public function make_new(Request $request){
         // Revisar que usuario y agregarlo en el insert
-        $id = DB::table('forms')->insertGetId(
-            ['user_id' => 1]
-        );
-        return response()->json(['id' => $id]);
+
+        if (User::is_admin($request->input('user_id'))) {
+            $id = DB::table('forms')->insertGetId(
+                ['user_id' => $request->input('user_id')]
+            );
+            return response()->json(['form_id' => $id]);
+        } else {
+            return response()->json(['not_authorized'=> "Not an admin user." ], 401);
+        }
     }
 
     /**
