@@ -68,7 +68,11 @@ class GenericValue
 			$ref->lat_value           = $this->value['lat'];
 			$ref->lng_value           = $this->value['lng'];
 		}
-
+		else if ( $this->model == \App\Models\Values\BlobValue::class )
+		{
+			$ref->value     = $this->value['binary'];
+			$ref->mime_type = $this->value['mime_type'];
+		}
 		else
 		{
 			$ref->value = $this->value;

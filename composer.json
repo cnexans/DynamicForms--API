@@ -9,7 +9,8 @@
         "bshaffer/oauth2-server-php": "~1.8",
         "laravel/framework": "5.1.*",
         "bshaffer/oauth2-server-httpfoundation-bridge": "^1.1",
-        "barryvdh/laravel-cors": "^0.8.0"
+        "barryvdh/laravel-cors": "^0.8.0",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
