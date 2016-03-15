@@ -37,12 +37,34 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_fields(Request $r){
-        print $r["id"];
-        foreach ($r["fields"] as $value) {
-            print $value;
-        }
-        return response()-> json(['id' => "holi"]);
+    public function add_fields(Request $request){
+        $json = (array) json_decode($request["form_structure"],true);
+
+        // Verificar que el usuario concuerda con el del form
+        // Verificar que tiene los permisos adecuados
+        // Verificar que no tiene campos ya
+
+        foreach ($json['fields'] as $field)
+        {
+            // echo gettype($field['position']) . "";
+            // echo gettype($field['label']) . "";
+            // echo gettype($field['question']) . "";
+            // echo gettype($field['type']) . "";
+
+            // Revisar que todos los tipos concuerdan o hacer
+            // insert en un batch
+
+            DB::table('field_descriptors')->insert([
+                    // 'id'       => $acum + $j,
+                    'form_id'  => $json['id'],
+                    'position' => $field['position'],
+                    'label'    => $field['label'],
+                    'question' => $field['question'],
+                    'type'     => $field['type']
+                    ]);
+        };
+
+        return response()-> json(['status' => "holi"]);
     }
 
     /**
