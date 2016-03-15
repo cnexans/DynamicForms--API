@@ -36,4 +36,13 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public static $mortals  = ['employee'];
+    public static $admins   = ['manager','president'];
+
+    public static function is_admin($id){
+        // Revisar que usuario y agregarlo en el insert
+        $user = self::find($id);
+        return in_array($user['membership'],self::$admins);
+    }
 }
