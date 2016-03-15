@@ -10,6 +10,8 @@ class TextValue extends Model
 
 	protected $table = 'text_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

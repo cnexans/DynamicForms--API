@@ -10,6 +10,8 @@ class StringValue extends Model
 
 	protected $table = 'string_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

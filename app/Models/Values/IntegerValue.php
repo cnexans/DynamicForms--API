@@ -10,6 +10,8 @@ class IntegerValue extends Model
 
 	protected $table = 'integer_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

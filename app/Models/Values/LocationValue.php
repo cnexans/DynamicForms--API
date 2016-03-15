@@ -10,6 +10,8 @@ class LocationValue extends Model
 
 	protected $table = 'location_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

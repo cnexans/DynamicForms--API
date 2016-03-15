@@ -10,6 +10,8 @@ class FloatValue extends Model
 
 	protected $table = 'float_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

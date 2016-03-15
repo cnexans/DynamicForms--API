@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User as \User;
+use App\User as User;
 
 class FormInstance extends Model
 {
@@ -12,7 +12,7 @@ class FormInstance extends Model
 
     public function getFormClass()
     {
-    	return Form::find( $this->form_id )
+    	return Form::find( $this->form_id );
     }
 
     public function whoAnswered()

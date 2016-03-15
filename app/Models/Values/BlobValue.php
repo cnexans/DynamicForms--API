@@ -10,6 +10,8 @@ class BlobValue extends Model
 
 	protected $table = 'blob_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();

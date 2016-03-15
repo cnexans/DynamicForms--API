@@ -10,6 +10,8 @@ class DateValue extends Model
 
 	protected $table = 'date_values';
 
+	public $timestamps = false;
+
 	public function __construct()
 	{
 		parent::__construct();
