@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use App\User;
+use App\Model\Form;
 
 class FormController extends Controller
 {
@@ -43,7 +44,14 @@ class FormController extends Controller
         // Verificar que el usuario concuerda con el del form
         // Verificar que tiene los permisos adecuados
         // Verificar que no tiene campos ya
-
+        
+        // DB::beginTransaction();
+        // try {
+            
+        // } catch (Exception $e) {
+            // DB::rollback();
+            // return response()-> json(['status' => false]);
+        // }
         foreach ($json['fields'] as $field)
         {
             // echo gettype($field['position']) . "";
@@ -64,7 +72,9 @@ class FormController extends Controller
                     ]);
         };
 
-        return response()-> json(['status' => "holi"]);
+        // DB::commit();
+
+        return response()-> json(['status' => true]);
     }
 
     /**
@@ -72,8 +82,11 @@ class FormController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function structure(){
+    public function structure(Request $request){
+        // $descriptors = Form::find( $request->input('form_id'))->getFieldDescriptors();
+        // return response()-> json($descriptors)
 
+        return response()-> json(['status' => true])
     }
 
 
