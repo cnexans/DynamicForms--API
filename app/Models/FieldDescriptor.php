@@ -13,4 +13,10 @@ class FieldDescriptor extends Model
     {
     	return Form::find( $this->form_id );
     }
+
+    public function getAllAnswers()
+    {
+    	return FormAnswer::where('form_instance_id', $this->id)
+    		->get();
+    }
 }
