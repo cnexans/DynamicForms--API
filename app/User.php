@@ -55,4 +55,29 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsToMany('App\Models\Form');
     }
+
+    public static function getAllWithRole( $role )
+    {
+        if (! in_array($role, array_merge(self::$admins,self::$mortals)))
+        {
+            return collect([]);
+        }
+
+        return self::where('membership', $role)->get();
+    }
+
+    // public static function getAllCreatedBy( $user )
+    // {
+    //     if ( is_a($user, 'App\User') )
+    //         $id = $user->id;
+
+    //     else if ( is_integer($user) )
+    //         $id = $user;
+
+    //     else
+    //         return collect([]);
+
+    //     return self::where('user_id', $id)
+    //         ->get();
+    // }
 }

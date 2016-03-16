@@ -85,6 +85,30 @@ Route::group(['prefix' => 'form'], function ()
     //
 });
 
+Route::group(['prefix' => 'user'], function ()
+{
+	Route::post('new-employee', [
+		'uses' => 'UserController@newEmployee'
+	]);
+
+	Route::post('new-manager', [
+		'uses' => 'UserController@newManager'
+	]);
+
+	Route::post('list-all', [
+		'uses' => 'UserController@listAll'
+	]);
+
+	Route::post('list-users', [
+		'uses' => 'UserController@listWithRole'
+	]);
+
+	Route::post('my-users', [
+		'uses' => 'UserController@myUsers'
+	]);
+
+});
+
 /*
 Route::get('private', function()
 {
