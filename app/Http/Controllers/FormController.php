@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use App\User;
-use App\Model\Form;
+use App\Models\Form;
 
 class FormController extends Controller
 {
@@ -40,39 +40,34 @@ class FormController extends Controller
      */
     public function add_fields(Request $request){
         $json = (array) json_decode($request["form_structure"],true);
-
         // Verificar que el usuario concuerda con el del form
         // Verificar que tiene los permisos adecuados
-        // Verificar que no tiene campos ya
+        // Verificar que no tiene campos 
         
-        // DB::beginTransaction();
-        // try {
+        DB::beginTransaction();
             
-        // } catch (Exception $e) {
-            // DB::rollback();
-            // return response()-> json(['status' => false]);
-        // }
         foreach ($json['fields'] as $field)
         {
-            // echo gettype($field['position']) . "";
-            // echo gettype($field['label']) . "";
-            // echo gettype($field['question']) . "";
-            // echo gettype($field['type']) . "";
 
             // Revisar que todos los tipos concuerdan o hacer
             // insert en un batch
 
-            DB::table('field_descriptors')->insert([
-                    // 'id'       => $acum + $j,
-                    'form_id'  => $json['id'],
-                    'position' => $field['position'],
-                    'label'    => $field['label'],
-                    'question' => $field['question'],
-                    'type'     => $field['type']
-                    ]);
+            try { 
+                DB::table('field_descriptors')->insert([
+                        // 'id'       => $acum + $j,
+                        'form_id'  => $json['id'],
+                        'position' => $field['position'],
+                        'label'    => $field['label'],
+                        'question' => $field['question'],
+                        'type'     => $field['type']
+                        ]);
+            } catch (Exception $e) {
+                DB::rollback();
+                return response()-> json(['status' => false]);
+            }
         };
 
-        // DB::commit();
+        DB::commit();
 
         return response()-> json(['status' => true]);
     }
@@ -83,10 +78,9 @@ class FormController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function structure(Request $request){
-        // $descriptors = Form::find( $request->input('form_id'))->getFieldDescriptors();
-        // return response()-> json($descriptors)
+        // Verificar que esa persona puede recibir esos datos
 
-        return response()-> json(['status' => true])
+        return response()-> json(Form::find($request->input('form_id'))->getFieldDescriptors());
     }
 
 
