@@ -4,11 +4,11 @@ namespace App\Models\Values;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TextValue extends Model
+class StringValue extends Model
 {
 	use ValueTrait;
 
-	protected $table = 'text_values';
+	protected $table = 'string_values';
 
 	public $timestamps = false;
 
@@ -16,6 +16,6 @@ class TextValue extends Model
 	{
 		parent::__construct();
 
-		$this->value_type = 'text';
+		$this->value_type = 'string';
 	}  
 }
