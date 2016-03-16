@@ -15,18 +15,18 @@ use App\Models\OptionType as OptionType;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('oauth');
-    //     $this->middleware('admin');
-    // }
+    public function __construct()
+    {
+        $this->middleware('oauth');
+        $this->middleware('admin');
+    }
 
     /**
      * Insertar un usuario de tipo empleado en el sistema
      *
      * @return \Illuminate\Http\Response
      */
-    public function newEmployee(Requests $request)
+    public function newEmployee(Request $request)
     {
         return response()->json("hola");
     }
@@ -36,7 +36,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function newManager(Requests $request)
+    public function newManager(Request $request)
     {
         return response()->json("hola");
     }
@@ -46,9 +46,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function listAll(Requests $request)
+    public function listAll(Request $request)
     {
-        return response()->json("User::all()");
+        return response()->json(User::all());
     }
     
     /**
@@ -57,7 +57,7 @@ class UserController extends Controller
      * @param rol: tipo del rol a buscar
      * @return \Illuminate\Http\Response
      */
-    public function listWithRole(Requests $request)
+    public function listWithRole(Request $request)
     {
         if ( !$request->has('role') ){
 
@@ -77,7 +77,7 @@ class UserController extends Controller
      * @param rol: tipo del rol a buscar
      * @return \Illuminate\Http\Response
      */
-    public function myUsers(Requests $request)
+    public function myUsers(Request $request)
     {
         return response()->json("hola");
     }
