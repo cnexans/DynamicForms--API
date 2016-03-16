@@ -1,0 +1,20 @@
+[08/03/2016 19:30:57] David: 2 tipos de formulario
+[08/03/2016 19:39:33] David: 1 crear instancia de formulario y devolver id
+[08/03/2016 19:39:54] *** Llamada finalizada. Duración: 14:38 ***
+[08/03/2016 19:40:29] David: 2 rellenar === meter valor a un campo de una instancia de formulario dado (id ==== devuelto por la peticion tipo 1 crear instancia)
+[08/03/2016 19:40:43] David: 3 eliminar instancia de formulario dado un id de la instancia
+[08/03/2016 19:42:42] David: 4 devolver id de todas las instancias de formulario dado un criterio (solo 2 tipos de criterio): todos las instancias de formulario que corresponden a un cierto tipo de formulario, o bien todas las instancias de formulario creadas por equis id de usuario
+[08/03/2016 19:43:05] David: 5 devolver las respuestas del formulario, dado un id de instancia de formulario
+[08/03/2016 19:43:15] *** Llamada a Javier López ***
+[08/03/2016 19:47:21] *** Llamada finalizada. Duración: 04:04 ***
+[08/03/2016 19:47:30] *** Llamada de Javier López ***
+[08/03/2016 19:53:14] David: 6. devolver id de los tipos de formulario, y su nombre
+[08/03/2016 19:55:44] David: 7. devolver estructura de tipo de formulario
+[08/03/2016 20:03:49] David: 8. crear nuevo tipo de formulario
+[08/03/2016 20:07:57] David: 9. crear usuario indicando su rol y lo que tu me digas
+[08/03/2016 20:08:46] David: 10.  asociar o desasociar un usuario a un formulario
+[08/03/2016 20:09:16] David: 11. listar usuarios, todos, o por rol
+[08/03/2016 20:10:00] David: empleado, generente, y presidente
+[08/03/2016 20:10:06] David: esos son los 3 roles
+[08/03/2016 20:11:29] David: tipo de usuario : peticiones permitidas
+[08/03/2016 20:16:11] David: 8. lista de formularios que puedo responder

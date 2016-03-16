@@ -17,7 +17,7 @@ class OAuthMiddleware
 
         $req = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 
-        $bridgeRequest = OAuth2_Request::createFromRequest($req);
+        $bridgeRequest = OAuth2_Request::createFromRequest($request);
         $bridgeResponse = new OAuth2_Response;
 
         if ( !$token = App::make('oauth2')->getAccessTokenData($bridgeRequest, $bridgeResponse) )
@@ -30,19 +30,13 @@ class OAuthMiddleware
                     return response()->json(['error' => 'The access token provided has expired'], 401);
             }
 
+
             return response()->json(['error' => 'Invalid access token'], 422);
         }
         else
         {
             $request['user_id'] = $token['user_id'];
         }
-
-
-
         return $next($request);
     }
-
-
-
-
 }

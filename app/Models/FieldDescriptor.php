@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class FieldDescriptor extends Model
 {
     protected $table = 'field_descriptors';
-    protected $hidden = ['deleted_at'];
+    protected $hidden = ['deleted_at', 'form_id'];
+
+    protected $fillable = ['form_id', 'position', 'label', 'question', 'type'];
+
+    public $timestamps = false;
 
     public function getOwnerForm()
     {

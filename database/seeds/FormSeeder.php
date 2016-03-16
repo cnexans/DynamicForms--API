@@ -18,6 +18,7 @@ class FormSeeder extends Seeder
         for ( $i = 1; $i<=3; $i++):
 			DB::table('forms')->insert([
 				'id'       => $i,
+                'name'     => $faker->words($nb = 1, $asText = true),
 	            'user_id'  => $faker->numberBetween($min = 1, $max = 3),
 	        ]);
 

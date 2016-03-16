@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Helpers;
 
 use OAuth2\Storage\Pdo;
 use Illuminate\Support\Facades\Auth as Auth;

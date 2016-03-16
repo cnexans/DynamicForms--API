@@ -9,6 +9,8 @@ class Form extends Model
 {
     protected $table = 'forms';
 
+    protected $fillable = ['user_id', 'name'];
+
     public function getFormInstances()
     {
     	return FormInstance::where('id_form', $this->id)
@@ -40,5 +42,10 @@ class Form extends Model
 
     	return self::where('user_id', $id)
     		->get();
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
     }
 }

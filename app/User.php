@@ -40,9 +40,19 @@ class User extends Model implements AuthenticatableContract,
     public static $mortals  = ['employee'];
     public static $admins   = ['manager','president'];
 
-    public static function is_admin($id){
+    public static function isAdmin($id)
+    {
         // Revisar que usuario y agregarlo en el insert
+
         $user = self::find($id);
-        return in_array($user['membership'],self::$admins);
+
+
+        return in_array( $user->membership, self::$admins);
+    }
+
+
+    public function forms()
+    {
+        return $this->belongsToMany('App\Models\Form');
     }
 }

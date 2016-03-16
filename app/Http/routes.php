@@ -11,9 +11,13 @@
 |
 */
 
+/* ============================
+=         Oauth Binding       =
+============================== */
+
 App::singleton('oauth2', function() {
 	
-	$storage = new App\Http\Controllers\OAuthPdo
+	$storage = new App\Helpers\OAuthPdo
 	([
 		'dsn' => 'mysql:dbname='.env('DB_DATABASE').';host=' . env('DB_HOST'),
 		'username' => env('DB_USERNAME'),
@@ -29,15 +33,19 @@ App::singleton('oauth2', function() {
 	return $server;
 });
 
+/*=====  Oauth Binding  ======*/
 
-Route::any('/', 'PostController@index');
 
+
+/*====================================
+=            Oauth Routes            =
+====================================*/
 
 Route::post('oauth/token', 'OAuthController@getAccessToken');
 
 Route::get('oauth/token', function(){
 	return response()->json([
-		'error' => 'Missing OAuth params',
+		'error' => 'Bad request',
 		'expected' => [
 			'post' => [
 				'grant_type',
@@ -50,11 +58,31 @@ Route::get('oauth/token', function(){
 	], 400);
 });
 
+/*=====     Oauth Routes     ======*/
+
+
+
+// Mostrar lista de los recursos
+// Route::any('/', 'PostController@index');
+
 // Skel para rutas con prefijo
-Route::group(['prefix' => 'form'], function () {
-    Route::post('new', array('uses' => 'FormController@make_new'));
-    Route::post('add_fields',array('uses' => 'FormController@add_fields'));
-    Route::post('structure',array('uses' => 'FormController@structure'));
+Route::group(['prefix' => 'form'], function ()
+{
+	Route::post('new', [
+		'uses' => 'DashboardController@create'
+	]);
+
+
+	Route::post('add-fields', [
+		'uses' => 'DashboardController@addFields'
+	]);
+
+	Route::post('structure', [
+		'uses' => 'DashboardController@structure'
+	]);
+
+    //Route::post('add_fields', ['uses' => 'FormController@add_fields']);
+    //
 });
 
 /*
