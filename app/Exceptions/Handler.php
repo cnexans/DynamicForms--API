@@ -42,6 +42,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+
+        if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)
+        {
+            return response()->json([
+                'error'   => 404,
+                'success' => false,
+                'message' => 'route not found in the API'
+            ], 404);
+        }
+
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }

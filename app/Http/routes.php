@@ -63,7 +63,28 @@ Route::get('oauth/token', function(){
 
 
 // Mostrar lista de los recursos
-// Route::any('/', 'PostController@index');
+Route::any('/', function() {
+	return response()->json([
+		'resources' => [
+			// oauth resources
+			'oauth/token' => 'creates or refreshes an oauth token. Make a get request for more info',
+
+			// form resources
+			'form/new'        => 'creates a new form, fields structure pending',
+			'form/add-fields' => 'add structures to existing form',
+			'form/structure'  => 'gives the structure fields of an existing form',
+
+			// user resources
+			'user/new-employee'     => 'creates a new user with role employee',
+			'user/new-manager'      => 'creates a new user with role manager',
+			'user/list-all'         => 'gives a list of all users',
+			'user/list-with-role'   => 'gives a list of all users given an specific role',
+			'user/remove'           => 'delete a user',
+			'user/attach/{form_id}' => 'give a user, normally an employee, the permission of answer a form',
+			'user/detach/{form_id}' => 'quits a user, normally an employee, the permission of answer a form',
+		]
+	], 200);
+});
 
 // Skel para rutas con prefijo
 Route::group(['prefix' => 'form'], function ()
