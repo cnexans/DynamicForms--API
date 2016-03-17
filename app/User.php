@@ -42,7 +42,6 @@ class User extends Model implements AuthenticatableContract,
 
     public static function isAdmin($id)
     {
-        // Revisar que usuario y agregarlo en el insert
 
         $user = self::find($id);
 
@@ -52,10 +51,12 @@ class User extends Model implements AuthenticatableContract,
 
     public static function isPresident($id)
     {
-        // Revisar que usuario y agregarlo en el insert
-
-
         return self::find($id)->membership == "president" ;
+    }
+
+    public static function hasMembership($id,$membership)
+    {
+        return self::find($id)->membership == $membership ;
     }
 
     public static function alreadyExists($email)
@@ -67,6 +68,7 @@ class User extends Model implements AuthenticatableContract,
 
         return $exists;
     }
+
 
 
     public function forms()
@@ -84,18 +86,4 @@ class User extends Model implements AuthenticatableContract,
         return self::where('membership', $role)->get();
     }
 
-    // public static function getAllCreatedBy( $user )
-    // {
-    //     if ( is_a($user, 'App\User') )
-    //         $id = $user->id;
-
-    //     else if ( is_integer($user) )
-    //         $id = $user;
-
-    //     else
-    //         return collect([]);
-
-    //     return self::where('user_id', $id)
-    //         ->get();
-    // }
 }

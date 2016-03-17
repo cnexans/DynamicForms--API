@@ -8,10 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use App\User;
-use App\Models\Form;
-use App\Models\FieldDescriptor as Descriptor;
-use App\Models\OptionType as OptionType;
-
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -109,7 +106,6 @@ class UserController extends Controller
     public function listWithRole(Request $request)
     {
         if ( !$request->has('role') ){
-
             return response()->json([
                 'success' => false,
                 'error'   => 401,
@@ -121,13 +117,63 @@ class UserController extends Controller
     }
 
     /**
-     * Listar todos los usuarios del sistema por rol
+     * Soft delete de un usuario dado su correo
      *
-     * @param rol: tipo del rol a buscar
+     * @param email: email del usuario
      * @return \Illuminate\Http\Response
      */
-    // public function myUsers(Request $request)
-    // {
-    //     return response()->json("hola");
-    // }
+     
+    public function remove(Request $request)
+    {
+        if ( !$request->has('email') ){
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'No email found'
+            ], 401);
+        }
+
+        if (!User::alreadyExists($request->input('email'))){
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'That user doesn\'t exists'
+            ], 401);
+        }
+
+        $user = User::where('email',$request->input('email'))->get()[0];
+        if ($user->membership == "president") {
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'You cannot delete a president'
+            ], 401);
+        }
+        if (  $user->membership == "manager" & 
+             !User::isPresident($request->input('user_id'))) {
+
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'Not enough privileges'
+            ], 401);
+            
+        }
+
+           
+        $user->deleted_at = Carbon::now()->toDateTimeString();
+        $result = $user->save();
+        if ( $result ) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Success']);
+        } else {
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'Something happened ¯\(o_.)/¯'
+            ], 401);
+        }
+
+    }
 }

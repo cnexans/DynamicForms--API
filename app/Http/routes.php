@@ -103,9 +103,9 @@ Route::group(['prefix' => 'user'], function ()
 		'uses' => 'UserController@listWithRole'
 	]);
 
-	// Route::post('my-users', [
-	// 	'uses' => 'UserController@myUsers'
-	// ]);
+	Route::post('remove', [
+		'uses' => 'UserController@remove'
+	]);
 
 });
 
