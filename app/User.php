@@ -50,6 +50,24 @@ class User extends Model implements AuthenticatableContract,
         return in_array( $user->membership, self::$admins);
     }
 
+    public static function isPresident($id)
+    {
+        // Revisar que usuario y agregarlo en el insert
+
+
+        return self::find($id)->membership == "president" ;
+    }
+
+    public static function alreadyExists($email)
+    {
+        // Revisar que usuario y agregarlo en el insert
+
+        $exists = ! self::where('email',$email)->get()->isempty();
+
+
+        return $exists;
+    }
+
 
     public function forms()
     {

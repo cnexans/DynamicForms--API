@@ -99,13 +99,13 @@ Route::group(['prefix' => 'user'], function ()
 		'uses' => 'UserController@listAll'
 	]);
 
-	Route::post('list-users', [
+	Route::post('list-with-role', [
 		'uses' => 'UserController@listWithRole'
 	]);
 
-	Route::post('my-users', [
-		'uses' => 'UserController@myUsers'
-	]);
+	// Route::post('my-users', [
+	// 	'uses' => 'UserController@myUsers'
+	// ]);
 
 });
 
