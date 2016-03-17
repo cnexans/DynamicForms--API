@@ -107,6 +107,14 @@ Route::group(['prefix' => 'user'], function ()
 		'uses' => 'UserController@remove'
 	]);
 
+	Route::post('attach/{user_id}', [
+		'uses' => 'UserController@attachUserToForm'
+	]);
+
+	Route::post('detach/{user_id}', [
+		'uses' => 'UserController@detachUserToForm'
+	]);
+
 });
 
 /*

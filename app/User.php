@@ -49,6 +49,15 @@ class User extends Model implements AuthenticatableContract,
         return in_array( $user->membership, self::$admins);
     }
 
+    public static function isMortal($id)
+    {
+
+        $user = self::find($id);
+
+
+        return in_array( $user->membership, self::$mortals);
+    }
+
     public static function isPresident($id)
     {
         return self::find($id)->membership == "president" ;
@@ -73,7 +82,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function forms()
     {
-        return $this->belongsToMany('App\Models\Form');
+        return $this->belongsToMany('App\Models\Form', 'form_users');
     }
 
     public static function getAllWithRole( $role )

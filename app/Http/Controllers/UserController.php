@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use App\User;
+use App\Models\Form as Form;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -29,7 +30,8 @@ class UserController extends Controller
             ], 401);
         }
 
-        if (User::alreadyExists($request->input('email'))){
+        if (User::alreadyExists($request->input('email')))
+        {
             return response()->json([
                 'success' => false,
                 'error'   => 401,
@@ -175,5 +177,75 @@ class UserController extends Controller
             ], 401);
         }
 
+    }
+
+
+    public function attachUserToForm(Request $request, $user_id)
+    {
+        if ( is_null($user_id) )
+            return response()->json([
+                'message' => 'user_id not found',
+                'error'   => 401,
+                'success' => false
+            ], 401);
+
+        if ( !$request->has('form_id') )
+            return response()->json([
+                'message' => 'form_id not found',
+                'error'   => 401,
+                'success' => false
+            ], 401);
+
+        $form_id = $request->input('form_id');
+
+        if ( !User::find($user_id) || !Form::find($form_id) )
+            return response()->json([
+                'message' => 'User or form doesnt exist',
+                'error'   => '401',
+                'success' => false
+            ], 401);
+
+
+        if ( !User::find($user_id)->forms()->find($form_id) )
+            User::find($user_id)->forms()->attach($form_id);
+
+
+        return response()->json([
+            'success' => true
+        ], 200);
+    }
+
+    public function detachUserToForm(Request $request, $user_id)
+    {
+        if ( is_null($user_id) )
+            return response()->json([
+                'message' => 'user_id not found',
+                'error'   => 401,
+                'success' => false
+            ], 401);
+
+        if ( !$request->has('form_id') )
+            return response()->json([
+                'message' => 'form_id not found',
+                'error'   => 401,
+                'success' => false
+            ], 401);
+
+        $form_id = $request->input('form_id');
+
+        if ( !User::find($user_id) || !Form::find($form_id) )
+            return response()->json([
+                'message' => 'User or form doesnt exist',
+                'error'   => '401',
+                'success' => false
+            ], 401);
+
+
+        User::find($user_id)->forms()->detach($form_id);
+
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

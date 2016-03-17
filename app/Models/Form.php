@@ -46,6 +46,11 @@ class Form extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\User', 'form_users');
+    }
+
+    public function attachUser(Request $request, $form_id)
+    {
+
     }
 }
