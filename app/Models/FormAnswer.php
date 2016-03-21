@@ -9,6 +9,8 @@ class FormAnswer extends Model
 {
     protected $table = 'form_answers';
 
+    protected $fillable = ['field_descriptor_id', 'form_instance_id', 'data_row'];
+
     // Esta es una respuesta a un campo de una cierta instancia de formulario
     public function getFormInstance()
     {

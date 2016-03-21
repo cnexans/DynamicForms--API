@@ -31,7 +31,10 @@ class OAuthMiddleware
             }
 
 
-            return response()->json(['error' => 'Invalid access token'], 422);
+
+            return response()->json(['error' => 'Invalid access token', 
+                'message' => $response->getParameter('error')
+            ], 422);
         }
         else
         {

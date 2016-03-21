@@ -143,7 +143,8 @@ class UserController extends Controller
             ], 401);
         }
 
-        $user = User::where('email',$request->input('email'))->get()[0];
+        $user = User::where('email', $request->input('email'))->get()[0];
+
         if ($user->membership == "president") {
             return response()->json([
                 'success' => false,
@@ -151,8 +152,8 @@ class UserController extends Controller
                 'message' => 'You cannot delete a president'
             ], 401);
         }
-        if (  $user->membership == "manager" & 
-             !User::isPresident($request->input('user_id'))) {
+        if (  $user->membership == "manager" && !User::isPresident($request->input('user_id')) )
+        {
 
             return response()->json([
                 'success' => false,
@@ -163,8 +164,9 @@ class UserController extends Controller
         }
 
            
-        $user->deleted_at = Carbon::now()->toDateTimeString();
-        $result = $user->save();
+        $user->delete();
+
+
         if ( $result ) {
             return response()->json([
                 'success' => true,
@@ -247,5 +249,54 @@ class UserController extends Controller
         return response()->json([
             'success' => true
         ], 200);
+    }
+
+    public function attachedForms(Request $request)
+    {
+        if ( !$request->has('requested_user_id') )
+            return response()->json([
+                'success' => false,
+                'error'   => '401',
+                'message' => 'requested_user_id not found'
+            ], 401);
+
+
+        $forms = User::find( $request->input('requested_user_id') )->forms()->get();
+
+        return response()->json($forms->toArray(), 200);
+    }
+
+    public function userProfile($id)
+    {
+        $user = User::withTrashed()->find( $id );
+
+        if ( !$user )
+            return response()->json([
+                'error'   => '401',
+                'success' => false,
+                'message' => 'El usuario no existe'
+            ], 401);
+
+        return response()->json($user, 200);
+    }
+
+    public function editUser(Request $request, $id)
+    {
+        $user = User::find( $id );
+
+        if ( !$user )
+            return response()->json([
+                'error'   => '401',
+                'success' => false,
+                'message' => 'El usuario no existe'
+            ], 401);
+
+        if ( ($request->has('name') && $user != null) && $user->role != 'president' )
+        {
+            $user->name = $request->input('name');
+            $user->save();
+        }
+
+        return response()->json($user, 200);
     }
 }

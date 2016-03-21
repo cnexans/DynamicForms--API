@@ -20,7 +20,7 @@ class BlobValues extends Migration
             $table->binary('value');
 
             //Mime-type del archivo
-            $table->binary('mine_type');
+            $table->binary('mime_type');
 
             //Referencia al campo
             $table->integer('field_descriptor_id')->unsigned();

@@ -12,6 +12,8 @@ class LocationValue extends Model
 
 	public $timestamps = false;
 
+	protected $fillable = ['field_descriptor_id', 'form_answer_id', 'lat_value', 'lng_value'];
+
 	public function __construct()
 	{
 		parent::__construct();

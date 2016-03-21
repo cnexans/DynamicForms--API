@@ -9,6 +9,7 @@ class FormInstance extends Model
 {
     protected $table = "form_instances";
 
+    protected $fillable = ['user_id', 'form_id'];
 
     public function getFormClass()
     {

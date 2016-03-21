@@ -73,6 +73,15 @@ Route::any('/', function() {
 			'form/new'        => 'creates a new form, fields structure pending',
 			'form/add-fields' => 'add structures to existing form',
 			'form/structure'  => 'gives the structure fields of an existing form',
+			'form/instances'  => 'gives the instances for the form in form_id field',
+			'form/delete'     => 'deletes the form with id form_id in the request',
+
+
+			'form/instance/create'          => 'creates a form instance of the form with id form_id in the request',
+			'form/instance/register-answer' => 'register a field answer of field_descriptor_id in the form_instance_id',
+
+			'form/instance/answers' => 'gives all the values with its fields descriptor for an instance of form_instance_id',
+			'images/{id}'           => 'returns the image value with its mime type for <img>, it needs the access_token or else it will return an error json',
 
 			// user resources
 			'user/new-employee'     => 'creates a new user with role employee',
@@ -80,8 +89,18 @@ Route::any('/', function() {
 			'user/list-all'         => 'gives a list of all users',
 			'user/list-with-role'   => 'gives a list of all users given an specific role',
 			'user/remove'           => 'delete a user',
-			'user/attach/{form_id}' => 'give a user, normally an employee, the permission of answer a form',
-			'user/detach/{form_id}' => 'quits a user, normally an employee, the permission of answer a form',
+			'user/attach/{user_id}' => 'give a user, normally an employee, the permission of answer a form',
+			'user/detach/{user_id}' => 'quits a user, normally an employee, the permission of answer a form',
+			'user/me'       => 'gives the logged user info',
+			'user/forms'    => 'gives the forms for a user with id of post data requested_user_id',
+			'forms/list'    => 'gives a list of all forms',
+			'user/{id}/edit' => 'edits a user',
+			'user/edit/me'  => 'edits the current user profile',
+
+
+			// pendientes
+			'user/{id}/profile' => 'gives the user info',
+			
 		]
 	], 200);
 });
@@ -102,9 +121,37 @@ Route::group(['prefix' => 'form'], function ()
 		'uses' => 'DashboardController@structure'
 	]);
 
+	Route::post('list', [
+		'uses' => 'DashboardController@formList'
+	]);
+
+	Route::post('delete', [
+		'uses' => 'DashboardController@deleteForm'
+	]);
+
+	Route::post('instances', [
+		'uses' => 'DashboardController@answersByFormId'
+	]);
+
+
+	Route::post('instance/create', [
+		'uses' => 'GeneralController@createFormInstance'
+	]);
+
+	Route::post('instance/register-answer', [
+		'uses' => 'GeneralController@insertAnswer'
+	]);
+
+	Route::post('instance/answers', [
+		'uses' => 'DashboardController@getInstanceAnswers'
+	]);
     //Route::post('add_fields', ['uses' => 'FormController@add_fields']);
     //
 });
+
+Route::get('images/{id}', [
+	'uses' => 'OpenController@showImage'
+]);
 
 Route::group(['prefix' => 'user'], function ()
 {
@@ -134,6 +181,26 @@ Route::group(['prefix' => 'user'], function ()
 
 	Route::post('detach/{user_id}', [
 		'uses' => 'UserController@detachUserToForm'
+	]);
+
+	Route::post('me', [
+		'uses' => 'GeneralController@me'
+	]);
+
+	Route::post('forms', [
+		'uses' => 'UserController@attachedForms'
+	]);
+
+	Route::post('{id}/profile', [
+		'uses' => 'UserController@userProfile'
+	]);
+
+	Route::post('/{id}/edit', [
+		'uses' => 'UserController@editUser'
+	]);
+
+	Route::post('/edit/me', [
+		'uses' => 'GeneralController@myEdit'
 	]);
 
 });

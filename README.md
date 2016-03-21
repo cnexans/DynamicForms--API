@@ -1,10 +1,14 @@
-# Laravel5OauthSeed
+# DynamicForms--api
 
-This repository initializes a laravel 5 project with BShaffer Oauth package for PHP
+This project has been made with Laravel 5.1 is used by DynamicForms--app and DynamicForms--dashboard.
+
+
+
+## About the OAuth2 usage
 
 Grant types: password, client and refresh
 
-## Password grant type
+### Password grant type
 
 servername/oauth/token
 ```javascript
@@ -29,7 +33,7 @@ Response
 ```
 
 
-## Refresh grant type
+### Refresh grant type
 
 servername/oauth/token
 ```javascript
@@ -50,7 +54,7 @@ Response
 }
 ```
 
-## Example controller method using Oauth middleware (PostController@index)
+### Example controller method using Oauth middleware (PostController@index)
 
 servername/
 
@@ -69,7 +73,7 @@ Response
 
 Where 1 is the user_id is related to the access token. 
 
-### If no access token given
+#### If no access token given
 
 ```javascript
 {
@@ -77,7 +81,7 @@ Where 1 is the user_id is related to the access token.
 }
 ```
 
-### If invalid access token
+#### If invalid access token
 ```javascript
 {
   "error": "Invalid access token"

@@ -17,7 +17,7 @@ class CreateStringValuesTable extends Migration
             $table->increments('id'); 
 
             //Valor
-            $table->float('value'); 
+            $table->string('value'); 
 
             //Referencia al campo
             $table->integer('field_descriptor_id')->unsigned();

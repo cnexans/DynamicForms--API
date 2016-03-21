@@ -11,6 +11,10 @@ use App\User;
 use App\Models\Form;
 use App\Models\FieldDescriptor as Descriptor;
 use App\Models\OptionType as OptionType;
+use App\Models\FormInstance as FormInstance;
+use App\Models\FormAnswer as FormAnswer;
+use App\Models\Values\BlobValue as BlobValue;
+use Image;
 
 class DashboardController extends Controller
 {
@@ -49,9 +53,9 @@ class DashboardController extends Controller
         if ( !$request->has('id') ):
             return response()->json([
                 'success' => false,
-                'error'   => 401,
+                'error'   => 402,
                 'message' => 'id field not found'
-            ], 401);
+            ], 402);
         endif;
 
 
@@ -73,7 +77,7 @@ class DashboardController extends Controller
                 foreach ( $field->options as $option_type ):
                     OptionType::create([
                         'field_descriptor_id' => $saved->id,
-                        'display_option'      => $option_type
+                        'display_option'      => $option_type->display_name
                     ]);
                 endforeach;
 
@@ -81,8 +85,8 @@ class DashboardController extends Controller
         });
 
         return response()->json([
-            'success'      => true
-        ]);
+            'success' => true
+        ], 200);
         
     }
 
@@ -112,65 +116,132 @@ class DashboardController extends Controller
 
         endforeach;
 
-        return response()->json($fields, 401);
+        return response()->json($fields, 200);
 
 
     }
 
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+    public function formList()
+    {
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
+        return response()->json(Form::all(), 200);
+    }
 
-    // *
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-     
-    // public function edit($id)
-    // {
-    //     //
-    // }
+    public function deleteForm(Request $request)
+    {
+        if ( !$request->has('form_id') )
+            return response()->json([
+                'success' => false,
+                'error'   => '402',
+                'message' => 'form_id field not found in the request'
+            ], 402);
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
+        if ( ($form = Form::find($request->input('form_id'))) != null )
+            $form->delete();
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
+        return response()->json([
+            'success' => true
+        ], 200);
+    }
+
+    public function answersByFormId(Request $request)
+    {
+        if ( !$request->has('form_id') )
+            return response()->json([
+                'success' => false,
+                'error'   => '402',
+                'message' => 'form_id field not found in the request'
+            ], 402);
+
+
+        if ( !( $form = Form::find($request->input('form_id')) ) )
+            return response()->json([
+                'success' => false,
+                'error'   => '402',
+                'message' => 'The form does not exist'
+            ], 402);
+
+
+        $instances = $form->getFormInstances()->map(function($instance) {
+            $response = new \StdClass();
+
+            $response->id          = $instance->id;
+            $response->created_at  = $instance->created_at->toW3cString();;
+            $response->answered_by = User::withTrashed()->find( $instance->user_id );
+
+            return $response;
+        });
+
+
+        return response()->json($instances, 200);
+
+
+    }
+
+
+    public function getInstanceAnswers(Request $request)
+    {
+        if ( !$request->has('form_instance_id') )
+            return response()->json([
+                'success' => false,
+                'error'   => '402',
+                'message' => 'form_instance_id field not found in the request'
+            ], 402);
+
+
+        $answers = FormAnswer::where('form_instance_id', $request->input('form_instance_id'))->get();
+
+        $answers = $answers->map(function($answer) {
+            $response = new \StdClass();
+
+            $response->descriptor = $answer->getDescriptor();
+            $value_ref            = $answer->getValue();
+            //$response->value      = $answer->getValue();
+
+            
+
+            if ( $response->descriptor->type == 'PHOTO' ||  $response->descriptor->type == 'CANVAS_PHOTO' ):
+
+                $response->value = url('/images/' . $answer->data_row);
+
+            elseif ( $response->descriptor->type == 'OPTION' ):
+
+                $response->value = OptionType::find( $value_ref->value )->display_option;
+
+            elseif ( $response->descriptor->type == 'LOCATION' ):
+
+                $response->value =  new \StdClass();
+                $response->value->lat = $value_ref->lat_value;
+                $response->value->lng = $value_ref->lng_value;
+
+            else:
+
+                $response->value = $value_ref->value;
+
+            endif;
+
+            return $response;
+        });
+
+
+        return response()->json($answers, 200);
+    }
+
+    public function showImage(Request $request, $id)
+    {
+        $photo = BlobValue::find($id);
+        if ( $photo == null )
+        {
+            return response()->json([
+                'error' => 1,
+                'message' => 'Archivo no encontrado'
+            ]);
+        }
+        $response = response()->make( $photo->value, 200 );
+        $response->header('Content-Type', $photo->mime_type);
+
+        return $response;
+    }
+
 }

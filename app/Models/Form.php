@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User as User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Form extends Model
 {
@@ -11,9 +12,13 @@ class Form extends Model
 
     protected $fillable = ['user_id', 'name'];
 
+    use SoftDeletes;
+
+
+
     public function getFormInstances()
     {
-    	return FormInstance::where('id_form', $this->id)
+    	return FormInstance::where('form_id', $this->id)
     		->get();
     }
 
@@ -49,8 +54,5 @@ class Form extends Model
         return $this->belongsToMany('App\User', 'form_users');
     }
 
-    public function attachUser(Request $request, $form_id)
-    {
 
-    }
 }
