@@ -97,6 +97,9 @@ Route::any('/', function() {
 			'user/{id}/edit' => 'edits a user',
 			'user/edit/me'  => 'edits the current user profile',
 
+			'user/me/my-forms' => 'returns the forms that the current user can response',
+			'user/me/my-form-structure' => 'return the structure of the form that a user can response',
+
 
 			// pendientes
 			'user/{id}/profile' => 'gives the user info',
@@ -202,6 +205,16 @@ Route::group(['prefix' => 'user'], function ()
 	Route::post('/edit/me', [
 		'uses' => 'GeneralController@myEdit'
 	]);
+
+	Route::post('/me/my-forms', [
+		'uses' => 'GeneralController@myForms'
+	]);
+
+	Route::post('/me/my-form-structure', [
+		'uses' => 'GeneralController@myFormStructure'
+	]);
+
+
 
 });
 

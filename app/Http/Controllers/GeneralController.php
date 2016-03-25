@@ -28,6 +28,49 @@ class GeneralController extends Controller
         return response()->json(User::find( $request->input('user_id') ), 200);
     }
 
+    public function myForms(Request $request)
+    {
+        $forms = User::find( $request->input('user_id') )->forms()->get();
+
+
+        return response()->json($forms->toArray(), 200);
+    }
+
+    public function myFormStructure(Request $request)
+    {
+        if ( !$request->has('form_id') ):
+            return response()->json([
+                'success' => false,
+                'error'   => 402,
+                'message' => 'form_id field not found'
+            ], 401);
+        endif;
+
+
+        $user_id = $request->input('user_id');
+        $form_id = $request->input('form_id');
+
+        if ( !User::find($user_id)->forms()->find($form_id) )
+            return response()->json([
+                'success' => false,
+                'error'   => 401,
+                'message' => 'That forms doesn\'t belong to you.'
+            ], 401);
+
+
+        // Una coleccion de objetos
+        $fields = Form::find($form_id)->getFieldDescriptors()->toArray();
+
+        foreach( $fields as $k => $field ):
+
+            if ( $field['type'] == 'OPTION' )
+                $fields[$k]['options'] = OptionType::fromDescriptor( $field['id'] )->toArray();
+
+        endforeach;
+
+        return response()->json($fields, 200);
+    }
+
     public function myEdit(Request $request)
     {
     	$user = User::find( $request->input('user_id') );
@@ -72,7 +115,7 @@ class GeneralController extends Controller
 
         //return response()->json($descriptor, 200);
 
-        if ( $descriptor->type == 'PHOTO' || $descriptor->type == 'CANVAS_PHOTO'):
+        if ( $descriptor->type == 'PHOTO' ):
 
             if (!$request->hasFile('value') || !$request->file('value')->isValid()):
                 return response()->json([
@@ -87,6 +130,28 @@ class GeneralController extends Controller
             $value = [
                 'binary'    => $image->encode('jpg', 20),
                 'mime_type' => $request->value->getMimeType()
+            ];
+
+        elseif (  $descriptor->type == 'CANVAS_PHOTO' ):
+
+            if (!$request->has('value') ):
+                return response()->json([
+                    'error'   => 1,
+                    'message' => 'There was an error uploading the photo to the server.'
+                ]);
+            endif;
+
+            $imgData = $request->input('value');
+            $imgData = str_replace(' ','+', $imgData);
+            $imgData = substr($imgData,strpos($imgData,",")+1);
+            $imgData = base64_decode($imgData);
+            
+            $img = Image::make($imgData);
+            $img->widen(400);
+
+            $value = [
+                'binary'    => $img->encode('jpg', 20),
+                'mime_type' => $img->mime()
             ];
 
         elseif( $descriptor->type == 'LOCATION' ) :
