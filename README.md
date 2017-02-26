@@ -21,12 +21,19 @@ The forms can be composed with the next inputs
 * Floating point numbers
 * Short strings
 * Text (large strings)
+* QR Codes
 * Dates
 * Blob values
   * Images and photos
   * Editable images and photos
 * Location (mobile's GPS)
 * Options
+
+## Parts
+
+* [API](https://github.com/cnexans/DynamicForms--API)
+* [Application](https://github.com/cnexans/DynamicForms--App)
+* [Dashboard](https://github.com/cnexans/DynamicForms--Dashboard)
 
 ## API
 
